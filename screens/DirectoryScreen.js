@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { FlatList } from "react-native";
 import { Avatar, ListItem } from 'react-native-elements';
+import { NEWSANDUPDATES } from "../shared/newsAndUpdates";
 
-const DirectoryScreen = (props) => {
-    const renderDirectoryItem = ({ item: newAndUpdates }) => {
+const DirectoryScreen = ({ navigation }) => {
+const [ newsAndUpdates, setNewsAndUpdates] = useState(NEWSANDUPDATES);
+
+    const renderDirectoryItem = ({ item: news }) => {
         return(
-            <ListItem onPress={() => props.onPress(newAndUpdates.id)}>
-                <Avatar source={newAndUpdates.image} rounded />
+            <ListItem onPress={() => navigation.navigate('NewsInfo', { news })}>
+                <Avatar source={news.image} rounded />
                 <ListItem.Content>
-                    <ListItem.Title>{newAndUpdates.name}</ListItem.Title>
-                    <ListItem.Subtitle>{newAndUpdates.date}</ListItem.Subtitle>
+                    <ListItem.Title>{news.name}</ListItem.Title>
+                    <ListItem.Subtitle>{news.date}</ListItem.Subtitle>
                 </ListItem.Content>
             </ListItem>
         );
@@ -16,7 +20,7 @@ const DirectoryScreen = (props) => {
 
     return (
         <FlatList
-            data={props.newAndUpdates}
+            data={newsAndUpdates}
             renderItem={renderDirectoryItem}
             keyExtractor={(item) => item.id.toString()}
         />

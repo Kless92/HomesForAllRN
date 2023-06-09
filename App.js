@@ -1,12 +1,12 @@
-import Main from "./screens/MainComponent";
-import { NaviagtionContainer } from '@react-navigation/native';
+import Main from './screens/MainComponent';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 export default function App() {
   return (
-    <NaviagtionContainer>
+    <NavigationContainer>
       <Main/>
-    </NaviagtionContainer>
+    </NavigationContainer>
   )
 }
 
