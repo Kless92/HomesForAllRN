@@ -46,12 +46,12 @@ const VolinteerNavigatior = () => {
             options={{ title: 'Volinteer',
                         headerLeft: () => (
                            <Icon
-                              name='home'
+                              name='heart'
                               type='font-awesome'
                               iconStyle={styles.stackIcon}
                            />
                         )
-         }}
+            }}
          />
       </Stack.Navigator>
    );
@@ -66,7 +66,7 @@ const DonationNavigatior = () => {
             options={{ title: 'Donations',
                         headerLeft: () => (
                            <Icon
-                              name='home'
+                              name='money'
                               type='font-awesome'
                               iconStyle={styles.stackIcon}
                            />
@@ -90,7 +90,7 @@ const DirectoryNavigator = () => {
             options= {{ title: 'News And Updates',
             headerLeft: () => (
                <Icon
-                  name='home'
+                  name='list'
                   type='font-awesome'
                   iconStyle={styles.stackIcon}
                />
@@ -150,10 +150,10 @@ const DirectoryNavigator = () => {
             <BotTab.Screen 
                name='News and Updates' 
                component={DirectoryNavigator} 
-               options={{ tabBarLabel: 'Home',
+               options={{ tabBarLabel: 'News and Updates',
                   tabBarIcon: ({ color }) => (
                      <Icon
-                        name='home'
+                        name='list'
                         type='font-awesome'
                         size={24}
                         iconStyle={{ width: 24 }}
@@ -165,10 +165,10 @@ const DirectoryNavigator = () => {
             <BotTab.Screen 
                name='Volinteer' 
                component={VolinteerNavigatior} 
-               options={{ tabBarLabel: 'Home',
+               options={{ tabBarLabel: 'Volinteer',
                   tabBarIcon: ({ color }) => (
                      <Icon
-                        name='home'
+                        name='heart'
                         type='font-awesome'
                         size={24}
                         iconStyle={{ width: 24 }}
@@ -180,10 +180,10 @@ const DirectoryNavigator = () => {
             <BotTab.Screen 
                name='Donations' 
                component={DonationNavigatior} 
-               options={{ tabBarLabel: 'Home',
+               options={{ tabBarLabel: 'Donations',
                   tabBarIcon: ({ color }) => (
                      <Icon
-                        name='home'
+                        name='money'
                         type='font-awesome'
                         size={24}
                         iconStyle={{ width: 24 }}
