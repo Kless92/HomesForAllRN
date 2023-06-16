@@ -24,13 +24,13 @@ const HomeNavigator = () => {
             name='Home'
             component={HomeScreen}
             options={{ title: 'Home',
-                        headerLeft: () => (
-                           <Icon
-                              name='home'
-                              type='font-awesome'
-                              iconStyle={styles.stackIcon}
-                           />
-                        )
+               headerLeft: () => (
+                  <Icon
+                     name='home'
+                     type='font-awesome'
+                     iconStyle={styles.stackIcon}
+                  />
+               )
          }}
          />
       </Stack.Navigator>
@@ -44,13 +44,13 @@ const VolinteerNavigatior = () => {
             name='Volinteer'
             component={VolinteerScreen}
             options={{ title: 'Volinteer',
-                        headerLeft: () => (
-                           <Icon
-                              name='heart'
-                              type='font-awesome'
-                              iconStyle={styles.stackIcon}
-                           />
-                        )
+               headerLeft: () => (
+                  <Icon
+                     name='heart'
+                     type='font-awesome'
+                     iconStyle={styles.stackIcon}
+                  />
+               )
             }}
          />
       </Stack.Navigator>
@@ -64,14 +64,14 @@ const DonationNavigatior = () => {
             name='Donations'
             component={DonationsScreen}
             options={{ title: 'Donations',
-                        headerLeft: () => (
-                           <Icon
-                              name='money'
-                              type='font-awesome'
-                              iconStyle={styles.stackIcon}
-                           />
-                        )
-         }}
+               headerLeft: () => (
+                  <Icon
+                     name='money'
+                     type='font-awesome'
+                     iconStyle={styles.stackIcon}
+                  />
+               )
+            }}
          />
       </Stack.Navigator>
    );
@@ -88,14 +88,14 @@ const DirectoryNavigator = () => {
             name='Directory'
             component={DirectoryScreen}
             options= {{ title: 'News And Updates',
-            headerLeft: () => (
-               <Icon
-                  name='list'
-                  type='font-awesome'
-                  iconStyle={styles.stackIcon}
-               />
-            )
-         }}
+               headerLeft: () => (
+                  <Icon
+                     name='list'
+                     type='font-awesome'
+                     iconStyle={styles.stackIcon}
+                  />
+               )
+            }}
          />
          <Stack.Screen
             name='NewsInfo'
@@ -199,7 +199,7 @@ const DirectoryNavigator = () => {
 
  const styles = StyleSheet.create({
    stackIcon: {
-      marginLeft: 100,
+      marginLeft: 10,
       color: '#fff',
       fontSize: 24
    }
