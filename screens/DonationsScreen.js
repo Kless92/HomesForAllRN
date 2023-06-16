@@ -1,5 +1,5 @@
-import { Text, View, TextInput, StyleSheet, Button, Switch, ScrollView} from 'react-native';
-import { useState } from "react";
+import { Text, View, TextInput, StyleSheet, Button, Switch, ScrollView, Alert} from 'react-native';
+import { useEffect, useState } from "react";
 
 const DonationsScreen = () => {
     const [firstText, onChangefirstText] = useState('');
@@ -39,14 +39,22 @@ const DonationsScreen = () => {
         :ammountText <=9 ? setAmmountError('But be ten dollars or more')
         :ammountText >=101 ? setAmmountError('We can not accept more then 100 dollors')
         :setAmmountError('');
+    }
 
+    useEffect (() => {
         fnError.length == 0 &&
         lnError.length == 0 &&
         phoneError.length == 0 &&
         emailError.length == 0 &&
-        ammountError.length == 0 ?  resetForm()
-        : console.log('Error');
-    }
+        ammountError.length == 0 &&
+        firstText.length != 0 &&
+        lastText.length != 0 &&
+        phoneText.length != 0 &&
+        emailText.length != 0 &&
+        ammountText.length !=0 ? alertForm()
+        : console.log(fnError.length+" else");
+    })
+
     ///Resets all form to default
     const resetForm = () => {
         onChangefirstText('');
@@ -56,6 +64,24 @@ const DonationsScreen = () => {
         onChangeAmmountText('');
         setContact(false);
     }
+
+    const alertForm = () => {
+        Alert.alert('Volinteer Form', "First Name: "+firstText+"\nLast Name: "
+        +lastText+"\nPhone Number: "+phoneText+"\nEmail: "
+        +emailText+"\n Ammount "+ammountText+" dollars.",
+        [
+            {
+                text: 'Cancel',
+                onPress: () => setAmmountError('Alert was cancled, hit submit again or make changes'),
+                style: 'cancel',
+            },
+            {
+                text: 'OK',
+                onPress: () => resetForm()
+            }
+        ],
+        { cancelable: false },
+    )}
 
     return(
         <ScrollView>

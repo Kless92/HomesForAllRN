@@ -1,5 +1,5 @@
-import { Text, View, TextInput, StyleSheet, Button, Switch, ScrollView} from 'react-native';
-import { useState } from "react";
+import { Text, View, TextInput, StyleSheet, Button, Switch, ScrollView, Alert} from 'react-native';
+import { useEffect, useState } from "react";
 
 const VolinteerScreen = () => {
     const [firstText, onChangefirstText] = useState('');
@@ -18,7 +18,7 @@ const VolinteerScreen = () => {
         firstText.length == 0  ? setfnError('First Name is required.') 
         : firstText.length <= 1 ? setfnError('Must be 2 or more characters.')
         : setfnError('');
-
+        
         lastText.length == 0  ? setlnError('Last Name is required.') 
         : lastText.length <= 1 ? setlnError('Must be 2 or more characters.')
         : setlnError('');
@@ -28,18 +28,25 @@ const VolinteerScreen = () => {
 
         emailText.length == 0 ? setEmailError('Email is required')
         :emailText.indexOf(' ') >= 0 ? setEmailError('Email can not contain spaces')
-        :emailText.includes('@') != true ? setEmailError('This email is missing @')
+        :emailText.includes('@') != true ? setEmailError('This email is missing @') 
         //FInd a way to check form more @'s
         //:emailText.includes('@') >=2 ? setEmailError('There should only be 1 @')
         :emailText.includes('.com') != true ? setEmailError('This email is missing the Domain Name')
         : setEmailError('');
+    }
 
+    useEffect (() => {
         fnError.length == 0 &&
         lnError.length == 0 &&
         phoneError.length == 0 &&
-        emailError.length == 0 ? resetForm()
-        : console.log('Error');
-    }
+        emailError.length == 0 &&
+        firstText.length != 0 &&
+        lastText.length != 0 &&
+        phoneText.length != 0 &&
+        emailText.length != 0 ? alertForm()
+        : console.log(fnError.length+" else");
+       // console.log("text");
+    })
     ///Resets all form to default
     const resetForm = () => {
         onChangefirstText('');
@@ -48,7 +55,26 @@ const VolinteerScreen = () => {
         onChangeEmailText('');
         setContact(false);
         onChangeExtraText('');
+        setEmailError('')
     }
+
+    const alertForm = () => {
+        Alert.alert('Volinteer Form', "First Name: "+firstText+"\nLast Name: "
+        +lastText+"\nPhone Number: "+phoneText+"\nEmail: "+emailText,
+        [
+            {
+                text: 'Cancel',
+                onPress: () => setEmailError('Alert was cancled, hit submit again or make changes'),
+                style: 'cancel',
+            },
+            {
+                text: 'OK',
+                onPress: () => resetForm()
+            }
+        ],
+        { cancelable: false },
+        
+    )}
 
     return(
         <ScrollView>
