@@ -2,6 +2,10 @@ import { Platform, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchNews } from "../features/NewsAndUpdates/newsSlice"
+import { fetchFrontPage } from "../features/FrontPage/frontPageSlice";
 import Constants from "expo-constants";
 import NewsInfoScreen from './NewsInfoScreen';
 import DirectoryScreen from "./DirectoryScreen";
@@ -76,7 +80,6 @@ const DonationNavigatior = () => {
       </Stack.Navigator>
    );
 }
-
 const DirectoryNavigator = () => {
    const Stack = createStackNavigator();
    return (
@@ -119,8 +122,14 @@ const DirectoryNavigator = () => {
 
    )
 };
-
  const Main = () => {
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      dispatch(fetchFrontPage());
+      dispatch(fetchNews());
+   }, [dispatch]);
+
     return (
       <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight}}>
          <BotTab.Navigator 

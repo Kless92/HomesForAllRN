@@ -1,0 +1,113 @@
+{
+  "frontPage": [
+    {
+      "id": 0,
+      "name": "Homes for All",
+      "image": "images/react-lake.jpg",
+      "date": "11/19/21",
+      "featured": false,
+      "description": 
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    },
+    {
+      "id": 1,
+      "name": "Homes One",
+      "image": "images/chrome-river.jpg",
+      "date": "11/19/21",
+      "featured": false,
+      "description": 
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    },
+    {
+      "id": 2,
+      "name": "Homes Two",
+      "image": "images/breadcrumb-trail.jpg",
+      "date": "11/19/21",
+      "featured": false,
+      "description": 
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    },
+    {
+      "id": 3,
+      "name": "Homes Three",
+      "image": "images/redux-woods.jpg",
+      "date": "11/19/21",
+      "featured": false,
+      "description": 
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    },
+    {
+      "id": 4,
+      "name": "Homes Four",
+      "image": "images/react-lake.jpg",
+      "date": "11/19/21",
+      "featured": true,
+      "description": 
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    },
+    {
+      "id": 5,
+      "name": "Homes Five",
+      "image": "images/react-lake.jpg",
+      "date": "11/19/21",
+      "featured": true,
+      "description":
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    }
+  ],
+  "newsandUpdates": [
+    {
+      "id": 0,
+      "name": "Homes One",
+      "image": "images/chrome-river.jpg",
+      "date": "11/19/21",
+      "featured": false,
+      "description": 
+        "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    },
+    {
+      "id": 1,
+      "name": "Head Two",
+      "image": "images/breadcrumb-trail.jpg",
+      "date": "9/29/19",
+      "featured": false,
+      "description": 
+        "This is my riffle this is my gun."
+    },
+    {
+      "id": 2,
+      "name": "Head Three",
+      "image": "images/redux-woods.jpg",
+      "date": "66/66/66",
+      "featured": false,
+      "description": 
+        "Goffy Toffy pick up you pants."
+    },
+    {
+      "id": 3,
+      "name": "Homes Four",
+      "image": "images/react-lake.jpg",
+      "date": "1/10/22",
+      "featured": false,
+      "description": 
+        "No new years baby for you lololoolol.."
+    },
+    {
+      "id": 4,
+      "name": "Homes Five",
+      "image": "images/react-lake.jpg",
+      "date": "08/12/22",
+      "featured": false,
+      "description": 
+        "TEvery body is borking for the x-mass."
+    },
+    {
+      "id": 5,
+      "name": "Homes for All",
+      "image": "images/react-lake.jpg",
+      "date": "11/19/21",
+      "featured": true,
+      "description": "This is a non-profict created to help low incom familys and or homeless by build affordiable homes."
+    }
+  ]
+}

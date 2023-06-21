@@ -2,23 +2,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 import Main from './screens/MainComponent';
 import * as SplashScreen from 'expo-splash-screen';
 
 //SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  
+
   const [appIsReady, setAppIsReady] = useState(false);
 
   const styles = StyleSheet.create({
     center: {
-      flex: 1, 
-      alignItems: 'center', 
-      justifyContent: 'center' 
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
     }
   })
-  
+
   useEffect(() => {
     async function prepare() {
       try {
@@ -34,25 +36,25 @@ export default function App() {
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {     
+    if (appIsReady) {
       await SplashScreen.hideAsync();
     }
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return (    
+    return (
       <View style={styles.center} onLayout={onLayoutRootView}>
-        <Text style={{fontSize: 32}}>SplashScreen Demo!</Text>
-        <Icon name='spinner' type='font-awesome' size={75}/>
+        <Text style={{ fontSize: 32 }}>SplashScreen Demo!</Text>
+        <Icon name='spinner' type='font-awesome' size={75} />
       </View>
     );
   }
-  
-  return (  
-    <NavigationContainer>
-      <Main/>
-    </NavigationContainer>
+
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Main />
+      </NavigationContainer>
+    </Provider>
   )
-
-
 }

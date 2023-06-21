@@ -1,14 +1,13 @@
 import { ScrollView, Text, View } from 'react-native';
-import { useState } from 'react';
 import { Card } from 'react-native-elements';
-import { FRONTPAGE } from '../shared/frontPage';
-import { NEWSANDUPDATES } from '../shared/newsAndUpdates';
+import { useSelector } from 'react-redux';
+import { baseURL } from '../shared/baseURL';
 
 const FeaturedItem = ({ item }) => {
     if (item) {
         return(
             <Card containerStyle={{ padding: 0 }}>
-                <Card.Image source={item.image}>
+                <Card.Image source={{ uri: baseURL + item.image }}>
                     <View style={{ justifyContent: 'center', flex: 1 }}>
                         <Text
                             style={{
@@ -29,11 +28,11 @@ const FeaturedItem = ({ item }) => {
 };
 
 const HomeScreen = () => {
-    const [frontPage, setFrontPage] = useState(FRONTPAGE);
-    const [news, setNews] = useState(NEWSANDUPDATES);
+    const frontPage = useSelector((state) => state.frontPage);
+    const newsandUpdates = useSelector((state) => state.newandUpdates);
 
-    const featFrontPage = frontPage.find((item) => item.featured);
-    const featNews = news.find((item) => item.featured);
+    const featFrontPage = frontPage.frontPageArray.find((item) => item.featured);
+    const featNews = newsandUpdates.newsArray.find((item) => item.featured);
     return (
         <ScrollView>
             <FeaturedItem item={featFrontPage}/>
