@@ -1,9 +1,25 @@
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, Animated } from 'react-native';
+import { useRef, useEffect } from 'react';
 import { Card } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { baseURL } from '../shared/baseURL';
+import Loading from '../commpoents/LodingComponent';
 
-const FeaturedItem = ({ item }) => {
+const FeaturedItem = (props) => {
+    const { item } = props;
+    /*Loding component called and errMess displayed 
+      if json server isn't up*/
+    if (props.isLoading) {
+        return <Loading/>
+    }
+    if (props.errMess) {
+        return (
+            <View>
+                <Text>{props.errMess}</Text>
+            </View>
+        )
+    }
+    
     if (item) {
         return(
             <Card containerStyle={{ padding: 0 }}>
@@ -31,13 +47,33 @@ const HomeScreen = () => {
     const frontPage = useSelector((state) => state.frontPage);
     const newsandUpdates = useSelector((state) => state.newandUpdates);
 
+    const fadeValue = useRef(new Animated.Value(0)).current;
+    const FadeInAnimation = Animated.timing(fadeValue, {
+        toValue: 1, 
+        duration: 3000, 
+        useNativeDriver: true
+    });
+
     const featFrontPage = frontPage.frontPageArray.find((item) => item.featured);
     const featNews = newsandUpdates.newsArray.find((item) => item.featured);
+
+    useEffect(() => {
+        FadeInAnimation.start();
+    }, [])
+
     return (
-        <ScrollView>
-            <FeaturedItem item={featFrontPage}/>
-            <FeaturedItem item={featNews}/>
-        </ScrollView>
+        <Animated.ScrollView style={{ opacity: fadeValue  }}>
+            <FeaturedItem 
+                item={featFrontPage}
+                isLoading={frontPage.isLoading}
+                errMess={frontPage.errMess}
+            />
+            <FeaturedItem 
+                item={featNews}
+                isLoading={newsandUpdates.isLoading}
+                errMess={newsandUpdates.errMess}
+            />
+        </Animated.ScrollView>
     )
 }
 

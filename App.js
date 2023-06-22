@@ -44,8 +44,8 @@ export default function App() {
   if (!appIsReady) {
     return (
       <View style={styles.center} onLayout={onLayoutRootView}>
-        <Text style={{ fontSize: 32 }}>SplashScreen Demo!</Text>
-        <Icon name='spinner' type='font-awesome' size={75} />
+        <Text style={{ fontSize: 32 }}>Homes For All</Text>
+        <Icon name='spinner' type='font-awesome' size={75} style={{marginTop: 30}}/>
       </View>
     );
   }

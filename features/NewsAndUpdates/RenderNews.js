@@ -1,11 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Card, Icon } from 'react-native-elements';
 import { baseURL } from "../../shared/baseURL";
+import * as Animatable from 'react-native-animatable';
 
 const RenderNews = ( props ) => {
     const { newsAndUpdates } = props;
     if (newsAndUpdates) {
         return (
+        <Animatable.View
+            animation={'fadeInLeftBig'}
+            duration={2000}
+            delay={1000}
+        >
             <Card containerStyle={styles.CardContainer}>
                 <Card.Image source={{uri: baseURL + newsAndUpdates.image}}>
                     <View style={{ justifyContent: 'center', flex: 1}}>
@@ -31,6 +37,7 @@ const RenderNews = ( props ) => {
                     onPress={() => props.isFavorite ? console.log('Already Set as Fav') : props.markFavorite()}
                 />
             </Card>
+        </Animatable.View>
         );
     }
     return < View />;
