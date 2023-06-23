@@ -1,5 +1,5 @@
-import { Text, View, TextInput, StyleSheet, Button, Switch, ScrollView, Alert } from 'react-native';
-import { useState } from "react";
+import { Text, View, TextInput, StyleSheet, Button, Switch, ScrollView, Alert, PanResponder } from 'react-native';
+import { useState, useRef } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import * as Animatable from 'react-native-animatable';
@@ -8,6 +8,33 @@ const VolinteerScreen = () => {
 
     const [contact, setContact] = useState(false);
     const [extraText, onChangeExtraText] = useState('');
+    const view = useRef();
+
+    const isLeftSwipe = ({ dx }) => dx < -200;
+    const isRightSwipe = ({ dx }) => dx > 200;
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderGrant: () => {
+            view.current
+            .pulse(500)
+            .then((endState) =>
+                console.log()
+            );
+        },
+        onPanResponderEnd: (e, gestureState) => {
+            console.log('pan responder end', gestureState);
+            if (isLeftSwipe(gestureState)) {
+                Alert.alert(
+                    'left at -200'
+                )
+            }
+            if (isRightSwipe(gestureState)) {
+                Alert.alert(
+                    'right at 200'
+                )
+            }
+        }
+    })
 
     const alertForm = (values, actions) => {
         Alert.alert('Volinteer Form', "First Name: " + values.firstName + "\nLast Name: "
@@ -49,6 +76,8 @@ const VolinteerScreen = () => {
             animation={'flipInX'}
             duration={2000}
             delay={1000}
+            ref={view}
+            {...panResponder.panHandlers}
         >
             <ScrollView>
                 <Text style={styles.topTitle}>

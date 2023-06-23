@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
@@ -107,17 +107,6 @@ const DirectoryNavigator = () => {
                title: route.params.news.name
             })}
          />
-         <Stack.Screen
-            name='Volinteer'
-            component={VolinteerScreen}
-            options= {{ title: 'Volinteer',
-         }}
-         />
-         <Stack.Screen
-            name='Donations'
-            component={DonationsScreen}
-            options= {{ title: 'Donations'}}
-         />
       </Stack.Navigator>
 
    )
@@ -159,7 +148,7 @@ const DirectoryNavigator = () => {
             <BotTab.Screen 
                name='News and Updates' 
                component={DirectoryNavigator} 
-               options={{ tabBarLabel: 'News and Updates',
+               options={{ tabBarLabel: 'News',
                   tabBarIcon: ({ color }) => (
                      <Icon
                         name='list'

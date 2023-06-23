@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, Animated } from 'react-native';
+import { Text, View, Animated} from 'react-native';
 import { useRef, useEffect } from 'react';
 import { Card } from 'react-native-elements';
 import { useSelector } from 'react-redux';
@@ -42,6 +42,7 @@ const FeaturedItem = (props) => {
     }
     return <View/>;
 };
+
 
 const HomeScreen = () => {
     const frontPage = useSelector((state) => state.frontPage);

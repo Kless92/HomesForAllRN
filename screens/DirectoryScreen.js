@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, View, PanResponder, Alert } from "react-native";
 import { Tile } from "react-native-elements";
 import { useSelector } from 'react-redux';
 import { baseURL } from '../shared/baseURL';
@@ -10,7 +10,7 @@ const DirectoryScreen = ({ navigation }) => {
     const newsandUpdates = useSelector((state) => state.newandUpdates);
     //Loding component called and errMess displayed if json server isn't up
     if (newsandUpdates.isLoading) {
-        return <Loading/>
+        return <Loading />
     }
     if (newsandUpdates.errMess) {
         return (
@@ -20,12 +20,32 @@ const DirectoryScreen = ({ navigation }) => {
         )
     }
 
+    const isLeftSwipe = ({ dx }) => dx < -200;
+    const isRightSwipe = ({ dx }) => dx > 200;
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderEnd: (e, gestureState) => {
+            console.log('pan responder end', gestureState);
+            if (isLeftSwipe(gestureState)) {
+                Alert.alert(
+                    'left at -200'
+                )
+            }
+            if (isRightSwipe(gestureState)) {
+                Alert.alert(
+                    'right at 200'
+                )
+            }
+        }
+    })
+
     const renderDirectoryItem = ({ item: news }) => {
         return (
             <Animatable.View
                 animation='fadeInLeft'
                 duration={2000}
                 delay={1000}
+                {...panResponder.panHandlers}
             >
                 <Tile
                     title={news.name}

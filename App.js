@@ -3,7 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import Loading from './commpoents/LodingComponent';
 import Main from './screens/MainComponent';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -45,16 +47,18 @@ export default function App() {
     return (
       <View style={styles.center} onLayout={onLayoutRootView}>
         <Text style={{ fontSize: 32 }}>Homes For All</Text>
-        <Icon name='spinner' type='font-awesome' size={75} style={{marginTop: 30}}/>
+        <Icon name='spinner' type='font-awesome' size={75} style={{ marginTop: 30 }} />
       </View>
     );
   }
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Main />
-      </NavigationContainer>
+      <PersistGate loading={<Loading/>} persistor={persistor}>
+        <NavigationContainer>
+          <Main />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   )
 }
