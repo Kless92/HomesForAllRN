@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import * as Animatable from 'react-native-animatable';
+import * as Notifications from 'expo-notifications';
 
 const VolinteerScreen = () => {
 
@@ -10,8 +11,6 @@ const VolinteerScreen = () => {
     const [extraText, onChangeExtraText] = useState('');
     const view = useRef();
 
-    const isLeftSwipe = ({ dx }) => dx < -200;
-    const isRightSwipe = ({ dx }) => dx > 200;
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
@@ -21,24 +20,12 @@ const VolinteerScreen = () => {
                 console.log()
             );
         },
-        onPanResponderEnd: (e, gestureState) => {
-            console.log('pan responder end', gestureState);
-            if (isLeftSwipe(gestureState)) {
-                Alert.alert(
-                    'left at -200'
-                )
-            }
-            if (isRightSwipe(gestureState)) {
-                Alert.alert(
-                    'right at 200'
-                )
-            }
-        }
     })
 
     const alertForm = (values, actions) => {
         Alert.alert('Volinteer Form', "First Name: " + values.firstName + "\nLast Name: "
-            + values.lastName + "\nPhone Number: " + values.phoneNumber + "\nEmail: " + values.email,
+            + values.lastName + "\nPhone Number: " + values.phoneNumber + "\nEmail: " 
+            + values.email + `\nContact: ${contact ? 'Email' : 'Phone'}`,
             [
                 {
                     text: 'Cancel',
@@ -47,6 +34,7 @@ const VolinteerScreen = () => {
                 {
                     text: 'OK',
                     onPress: () => {
+                        presentLocalNotification();
                         actions.resetForm({})
                         setContact(false)
                         onChangeExtraText('')
@@ -57,6 +45,35 @@ const VolinteerScreen = () => {
 
         )
     }
+
+    const presentLocalNotification = async (contact) => {
+        const sendNotification = () => {
+            Notifications.setNotificationHandler({
+                handleNotification: async () => ({
+                    shouldShowAlert: true,
+                    shouldPlaySOund: true,
+                    shouldSetBadge: true
+                })
+            });
+
+            Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "Volinteer Form Submited",
+                    body: `You Form has been successfully sent! We'll contact you by ${contact ? 'Email' : 'Phone'}`
+                },
+                trigger: null
+            });
+        };
+        let permissions = await Notifications.getPermissionsAsync();
+        if (!permissions.granted) {
+            permissions = await Notifications.requestPermissionsAsync();
+        }
+        if (permissions.granted) {
+            sendNotification();
+        }
+    };
+
+    //Error check for formik
     const displayErrorMesages = Yup.object().shape({
         firstName: Yup.string()
             .min(2, 'Must be 2 or more characters.')

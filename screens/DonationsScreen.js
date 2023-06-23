@@ -9,9 +9,6 @@ const DonationsScreen = () => {
     const [contact, setContact] = useState(false);
     const view = useRef();
 
-    const isLeftSwipe = ({ dx }) => dx < -200;
-    const isRightSwipe = ({ dx }) => dx > 200;
-
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
@@ -21,19 +18,6 @@ const DonationsScreen = () => {
                 console.log()
             );
         },
-        onPanResponderEnd: (e, gestureState) => {
-            console.log('pan responder end', gestureState);
-            if (isLeftSwipe(gestureState)) {
-                Alert.alert(
-                    'left at -200'
-                )
-            }
-            if (isRightSwipe(gestureState)) {
-                Alert.alert(
-                    'right at 200'
-                )
-            }
-        }
     })
 
     const alertForm = (values, actions) => {
@@ -48,6 +32,7 @@ const DonationsScreen = () => {
                 {
                     text: 'OK',
                     onPress: () => {
+                        presentLocalNotification(values.email);
                         actions.resetForm({})
                         setContact(false)
                     }
@@ -56,6 +41,35 @@ const DonationsScreen = () => {
             { cancelable: false },
         )
     }
+
+    const presentLocalNotification = async (email) => {
+        const sendNotification = () => {
+            Notifications.setNotificationHandler({
+                handleNotification: async () => ({
+                    shouldShowAlert: true,
+                    shouldPlaySOund: true,
+                    shouldSetBadge: true
+                })
+            });
+
+            Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "Donation Form Submited",
+                    body: "You Form has been successfully sent!  You billing will be sent to "+email
+                },
+                trigger: null
+            });
+        };
+        let permissions = await Notifications.getPermissionsAsync();
+        if (!permissions.granted) {
+            permissions = await Notifications.requestPermissionsAsync();
+        }
+        if (permissions.granted) {
+            sendNotification();
+        }
+    };
+
+    //Error check for formik
     const displayErrorMesages = Yup.object().shape({
         firstName: Yup.string()
             .min(2, 'Must be 2 or more characters.')
@@ -84,7 +98,7 @@ const DonationsScreen = () => {
         >
             <ScrollView>
                 <Text style={styles.topTitle}>
-                    Donations Screen
+                    Fill out Donation Form below
                 </Text>
                 <Formik
                     initialValues={{
