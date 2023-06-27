@@ -13,10 +13,10 @@ const DonationsScreen = () => {
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
             view.current
-            .swing(500)
-            .then((endState) =>
-                console.log()
-            );
+                .swing(500)
+                .then((endState) =>
+                    console.log()
+                );
         },
     })
 
@@ -55,7 +55,7 @@ const DonationsScreen = () => {
             Notifications.scheduleNotificationAsync({
                 content: {
                     title: "Donation Form Submited",
-                    body: "You Form has been successfully sent!  You billing will be sent to "+email
+                    body: "You Form has been successfully sent!  You billing will be sent to " + email
                 },
                 trigger: null
             });
@@ -89,30 +89,65 @@ const DonationsScreen = () => {
             .required('A number is required.')
     })
     return (
-        <Animatable.View
-            animation={"flipInY"}
-            duration={2000}
-            delay={1000}
-            ref={view}
-            {...panResponder.panHandlers}
-        >
-            <ScrollView>
-                <Text style={styles.topTitle}>
-                    Fill out Donation Form below
-                </Text>
-                <Formik
-                    initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        phoneNumber: '',
-                        email: '',
-                        amount: '',
-                    }}
-                    validationSchema={displayErrorMesages}
-                    onSubmit={(values, actions) => { alertForm(values, actions) }}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-                        <View>
+        <ScrollView>
+            <Text style={styles.topTitle}>
+                Fill out Donation Form below
+            </Text>
+            <Formik
+                initialValues={{
+                    firstName: '',
+                    lastName: '',
+                    phoneNumber: '',
+                    email: '',
+                    amount: '',
+                }}
+                validationSchema={displayErrorMesages}
+                onPanResponderEnd
+                onSubmit={(values, actions) => { alertForm(values, actions) }}
+            >
+                {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => {
+                    const view = useRef();
+                    const isLeftSwipe = ({ dx }) => dx < -200;
+                    const isRightSwipe = ({ dx }) => dx > 200;
+
+                    const panResponder = PanResponder.create({
+                        onStartShouldSetPanResponder: () => true,
+                        onPanResponderGrant: () => {
+                            view.current
+                                .pulse(500)
+                                .then((endState) =>
+                                    console.log()
+                                );
+                        },
+                        onPanResponderEnd: (e, gestureState) => {
+                            console.log('pan responder end', gestureState);
+                            if (isLeftSwipe(gestureState)) {
+                                setFieldValue('firstName', "")
+                                setFieldValue('lastName', "")
+                                setFieldValue('phoneNumber', "")
+                                setFieldValue('email', "")
+                                setFieldValue('amount', "")
+                                setContact(false)
+                            }
+                            if (isRightSwipe(gestureState)) {
+                                setFieldValue('firstName', "")
+                                setFieldValue('lastName', "")
+                                setFieldValue('phoneNumber', "")
+                                setFieldValue('email', "")
+                                setFieldValue('amount', "")
+                                setContact(false)
+                            }
+                        }
+                    })
+
+                    return (
+                        <Animatable.View
+                            animation={"flipInY"}
+                            duration={2000}
+                            delay={1000}
+                            ref={view}
+                            {...panResponder.panHandlers}
+                        >
                             <TextInput
                                 style={styles.input}
                                 onChangeText={handleChange('firstName')}
@@ -188,11 +223,11 @@ const DonationsScreen = () => {
                                 />
                             </View>
                             <Button onPress={handleSubmit} title="Submit" />
-                        </View>
-                    )}
-                </Formik>
-            </ScrollView>
-        </Animatable.View>
+                        </Animatable.View>
+                    )
+                }}
+            </Formik>
+        </ScrollView>
     )
 };
 

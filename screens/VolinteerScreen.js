@@ -6,25 +6,12 @@ import * as Animatable from 'react-native-animatable';
 import * as Notifications from 'expo-notifications';
 
 const VolinteerScreen = () => {
-
     const [contact, setContact] = useState(false);
     const [extraText, onChangeExtraText] = useState('');
-    const view = useRef();
-
-    const panResponder = PanResponder.create({
-        onStartShouldSetPanResponder: () => true,
-        onPanResponderGrant: () => {
-            view.current
-            .pulse(500)
-            .then((endState) =>
-                console.log()
-            );
-        },
-    })
 
     const alertForm = (values, actions) => {
         Alert.alert('Volinteer Form', "First Name: " + values.firstName + "\nLast Name: "
-            + values.lastName + "\nPhone Number: " + values.phoneNumber + "\nEmail: " 
+            + values.lastName + "\nPhone Number: " + values.phoneNumber + "\nEmail: "
             + values.email + `\nContact: ${contact ? 'Email' : 'Phone'}`,
             [
                 {
@@ -42,7 +29,6 @@ const VolinteerScreen = () => {
                 }
             ],
             { cancelable: false },
-
         )
     }
 
@@ -72,7 +58,6 @@ const VolinteerScreen = () => {
             sendNotification();
         }
     };
-
     //Error check for formik
     const displayErrorMesages = Yup.object().shape({
         firstName: Yup.string()
@@ -89,29 +74,66 @@ const VolinteerScreen = () => {
             .required('Email is required.')
     });
     return (
-        <Animatable.View
-            animation={'flipInX'}
-            duration={2000}
-            delay={1000}
-            ref={view}
-            {...panResponder.panHandlers}
-        >
-            <ScrollView>
-                <Text style={styles.topTitle}>
-                    Fill out the form below please.
-                </Text>
-                <Formik
-                    initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        phoneNumber: '',
-                        email: '',
-                    }}
-                    validationSchema={displayErrorMesages}
-                    onSubmit={(values, actions) => { alertForm(values, actions) }}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-                        <View>
+        <ScrollView>
+            <Text style={styles.topTitle}>
+                Fill out the form below please.
+            </Text>
+            <Formik
+                initialValues={{
+                    firstName: '',
+                    lastName: '',
+                    phoneNumber: '',
+                    email: '',
+                }}
+                validationSchema={displayErrorMesages}
+                onPanResponderEnd
+                onSubmit={(values, actions) => { alertForm(values, actions) }}
+
+
+            >
+                {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched  }) => {
+                    const view = useRef();
+                    const isLeftSwipe = ({ dx }) => dx < -200;
+                    const isRightSwipe = ({ dx }) => dx > 200;
+
+                    const panResponder = PanResponder.create({
+                        onStartShouldSetPanResponder: () => true,
+                        onPanResponderGrant: () => {
+                            view.current
+                                .pulse(500)
+                                .then((endState) =>
+                                    console.log()
+                                );
+                        },
+                        onPanResponderEnd: (e, gestureState) => {
+                            console.log('pan responder end', gestureState);
+                            if (isLeftSwipe(gestureState)) {
+                                setFieldValue('firstName', "")
+                                setFieldValue('lastName', "")
+                                setFieldValue('phoneNumber', "")
+                                setFieldValue('email', "")
+                                setContact(false)
+                                onChangeExtraText('')
+                            }
+                            if (isRightSwipe(gestureState)) {
+                                setFieldValue('firstName', "")
+                                setFieldValue('lastName', "")
+                                setFieldValue('phoneNumber', "")
+                                setFieldValue('email', "")
+                                setContact(false)
+                                onChangeExtraText('')
+                            }
+                        }
+                    })
+
+                    return (
+                        <Animatable.View
+                            animation={'flipInX'}
+                            duration={2000}
+                            delay={1000}
+                            ref={view}
+                            {...panResponder.panHandlers}
+                        >
                             <TextInput
                                 style={styles.input}
                                 onChangeText={handleChange('firstName')}
@@ -184,11 +206,11 @@ const VolinteerScreen = () => {
                                 />
                             </View>
                             <Button onPress={handleSubmit} title="Submit" />
-                        </View>
-                    )}
-                </Formik>
-            </ScrollView>
-        </Animatable.View>
+                        </Animatable.View>
+                    )
+                }}
+            </Formik>
+        </ScrollView>
     )
 };
 

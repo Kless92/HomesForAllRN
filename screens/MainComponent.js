@@ -45,9 +45,9 @@ const VolinteerNavigatior = () => {
    return (
       <Stack.Navigator screenOptions={screenOptions}>
          <Stack.Screen
-            name='Volinteer'
+            name='Volunteer'
             component={VolinteerScreen}
-            options={{ title: 'Volinteer',
+            options={{ title: 'Volunteer',
                headerLeft: () => (
                   <Icon
                      name='heart'
@@ -161,9 +161,9 @@ const DirectoryNavigator = () => {
                }}   
             />
             <BotTab.Screen 
-               name='Volinteer' 
+               name='Volunteer' 
                component={VolinteerNavigatior} 
-               options={{ tabBarLabel: 'Volinteer',
+               options={{ tabBarLabel: 'Volunteer',
                   tabBarIcon: ({ color }) => (
                      <Icon
                         name='heart'
